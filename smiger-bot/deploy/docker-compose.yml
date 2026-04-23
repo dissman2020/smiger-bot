@@ -1,12 +1,13 @@
 services:
   db:
-    image: docker.1ms.run/library/postgres:16-alpine
+    image: postgres:16-alpine
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: smiger_bot
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB:-smiger_bot}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -16,9 +17,10 @@ services:
       retries: 10
 
   redis:
-    image: docker.1ms.run/library/redis:7-alpine
+    image: redis:7-alpine
+    restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6379}:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -26,13 +28,14 @@ services:
       retries: 10
 
   backend:
-    build: ./backend
+    image: smiger-bot/backend:1.0.4
+    restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT:-8000}:8000"
     env_file: .env
     environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/smiger_bot
-      REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-smiger_bot}
+      REDIS_URL: redis://redis:${REDIS_PORT:-6379}/0
       CHROMA_PERSIST_DIR: /app/chroma_data
     volumes:
       - chroma_data:/app/chroma_data
@@ -44,12 +47,10 @@ services:
         condition: service_healthy
 
   frontend:
-    build:
-      context: ./frontend
-      args:
-        NEXT_PUBLIC_API_URL: http://10.10.40.58:8000
+    image: smiger-bot/frontend:1.0.4
+    restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "${FRONTEND_PORT:-3000}:3000"
     depends_on:
       - backend
 

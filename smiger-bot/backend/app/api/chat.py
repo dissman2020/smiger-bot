@@ -1,13 +1,16 @@
+import asyncio
 import json
 import logging
 import uuid
 from datetime import datetime, timezone
+from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.auth import verify_token
+from app.config import settings
 from app.core import gchat_client, telegram_client, whatsapp_client
 from app.core.conversation import ConversationManager
 from app.core.intent_detector import detect_purchase_intent
@@ -15,6 +18,46 @@ from app.core.product_recommender import extract_product_cards
 from app.core.ws_registry import register_user, unregister_user
 from app.models.database import Conversation, Lead, Message, async_session, get_db
 from app.models.schemas import ChatRequest, ChatResponse, ConversationListItem, ConversationOut
+
+# Redis 客户端（用于分布式锁）
+import redis.asyncio as aioredis
+
+_redis: aioredis.Redis | None = None
+
+async def _get_redis() -> aioredis.Redis:
+    global _redis
+    if _redis is None:
+        _redis = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
+    return _redis
+
+
+@asynccontextmanager
+async def conversation_lock(conversation_id: str, timeout: int = 30):
+    """
+    分布式锁：确保同一会话的消息串行处理
+    防止 turn_count 竞态和消息乱序
+    """
+    r = await _get_redis()
+    lock_key = f"lock:conv:{conversation_id}"
+    lock_value = uuid.uuid4().hex
+
+    # 尝试获取锁
+    acquired = await r.set(lock_key, lock_value, nx=True, ex=timeout)
+    if not acquired:
+        raise HTTPException(status_code=429, detail="Message processing, please try again")
+
+    try:
+        yield lock_value
+    finally:
+        # 释放锁（使用 Lua 脚本确保原子性）
+        lua_script = """
+        if redis.call("get", KEYS[1]) == ARGV[1] then
+            return redis.call("del", KEYS[1])
+        else
+            return 0
+        end
+        """
+        await r.eval(lua_script, 1, lock_key, lock_value)
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/chat", tags=["chat"])
@@ -127,7 +170,9 @@ async def chat(body: ChatRequest, db: AsyncSession = Depends(get_db)):
             await db.commit()
 
     if conv.handoff_status == "active":
-        first_notice, _ = await _handle_human_active_message(db, conv, body.message)
+        # 转人工状态也需要锁保护，防止消息乱序
+        async with conversation_lock(conv.id, timeout=30):
+            first_notice, _ = await _handle_human_active_message(db, conv, body.message)
         return ChatResponse(
             conversation_id=conv.id,
             message="您的消息已转给人工客服处理。" if first_notice else "",
@@ -135,11 +180,13 @@ async def chat(body: ChatRequest, db: AsyncSession = Depends(get_db)):
             lead_prompt=False,
         )
 
-    reply, confidence, lead_prompt = await conv_manager.handle_message(
-        db=db,
-        conversation=conv,
-        user_message=body.message,
-    )
+    # 使用分布式锁确保同一会话的消息串行处理
+    async with conversation_lock(conv.id, timeout=30):
+        reply, confidence, lead_prompt = await conv_manager.handle_message(
+            db=db,
+            conversation=conv,
+            user_message=body.message,
+        )
 
     return ChatResponse(
         conversation_id=conv.id,
@@ -193,60 +240,83 @@ async def chat_ws(websocket: WebSocket, conversation_id: str):
                     if profile_changed:
                         await db.commit()
 
-                # Human handoff active: store message and route to channels.
-                if conv.handoff_status == "active":
-                    first_notice, _ = await _handle_human_active_message(db, conv, user_message)
+                # 使用分布式锁确保消息处理串行化
+                lock_acquired = False
+                try:
+                    async with conversation_lock(conv.id, timeout=30):
+                        lock_acquired = True
 
-                    if first_notice:
+                        # Human handoff active: store message and route to channels.
+                        if conv.handoff_status == "active":
+                            first_notice, _ = await _handle_human_active_message(db, conv, user_message)
+                            await db.commit()
+
+                            if first_notice:
+                                await websocket.send_text(json.dumps({
+                                    "type": "token",
+                                    "content": "人工客服已接入，您的消息会直接转给客服处理。",
+                                }))
+
+                            await websocket.send_text(json.dumps({
+                                "type": "done",
+                                "conversation_id": conv.id,
+                                "confidence": 1.0,
+                                "lead_prompt": False,
+                                "handoff_active": True,
+                            }))
+                            continue
+
+                        # Normal AI processing.
+                        full_reply = ""
+                        confidence = 0.0
+                        lead_prompt = False
+
+                        async for token, meta in conv_manager.handle_message_stream(
+                            db=db,
+                            conversation=conv,
+                            user_message=user_message,
+                        ):
+                            if meta:
+                                confidence = meta.get("confidence", 0.0)
+                                lead_prompt = meta.get("lead_prompt", False)
+                            else:
+                                full_reply += token
+                                await websocket.send_text(json.dumps({"type": "token", "content": token}))
+
+                        product_cards = extract_product_cards(full_reply)
+                        if product_cards:
+                            await websocket.send_text(json.dumps({
+                                "type": "products",
+                                "items": product_cards,
+                            }))
+
+                        handoff_triggered = False
+                        if conv.handoff_status in ("none", "resolved"):
+                            if detect_purchase_intent(user_message, full_reply):
+                                conv.handoff_status = "pending"
+                                conv.handoff_at = datetime.now(timezone.utc)
+                                conv.handoff_notice_sent = False
+                                if not conv.whatsapp_tag:
+                                    conv.whatsapp_tag = uuid.uuid4().hex[:6]
+                                await db.commit()
+                                handoff_triggered = True
+                                logger.info("Purchase intent detected for conversation %s", conv.id)
+
+                except HTTPException as e:
+                    if e.status_code == 429:
+                        # 锁获取失败，提示用户稍后重试
                         await websocket.send_text(json.dumps({
-                            "type": "token",
-                            "content": "人工客服已接入，您的消息会直接转给客服处理。",
+                            "type": "error",
+                            "content": "消息处理中，请稍后再试",
                         }))
-
-                    await websocket.send_text(json.dumps({
-                        "type": "done",
-                        "conversation_id": conv.id,
-                        "confidence": 1.0,
-                        "lead_prompt": False,
-                        "handoff_active": True,
-                    }))
-                    continue
-
-                # Normal AI processing.
-                full_reply = ""
-                confidence = 0.0
-                lead_prompt = False
-
-                async for token, meta in conv_manager.handle_message_stream(
-                    db=db,
-                    conversation=conv,
-                    user_message=user_message,
-                ):
-                    if meta:
-                        confidence = meta.get("confidence", 0.0)
-                        lead_prompt = meta.get("lead_prompt", False)
-                    else:
-                        full_reply += token
-                        await websocket.send_text(json.dumps({"type": "token", "content": token}))
-
-                product_cards = extract_product_cards(full_reply)
-                if product_cards:
-                    await websocket.send_text(json.dumps({
-                        "type": "products",
-                        "items": product_cards,
-                    }))
-
-                handoff_triggered = False
-                if conv.handoff_status in ("none", "resolved"):
-                    if detect_purchase_intent(user_message, full_reply):
-                        conv.handoff_status = "pending"
-                        conv.handoff_at = datetime.now(timezone.utc)
-                        conv.handoff_notice_sent = False
-                        if not conv.whatsapp_tag:
-                            conv.whatsapp_tag = uuid.uuid4().hex[:6]
-                        await db.commit()
-                        handoff_triggered = True
-                        logger.info("Purchase intent detected for conversation %s", conv.id)
+                        await websocket.send_text(json.dumps({
+                            "type": "done",
+                            "conversation_id": conv.id,
+                            "confidence": 0.0,
+                            "lead_prompt": False,
+                        }))
+                        continue
+                    raise
 
                         preview = user_message[:200] if user_message else full_reply[:200]
                         if whatsapp_client.is_enabled():
@@ -271,19 +341,35 @@ async def chat_ws(websocket: WebSocket, conversation_id: str):
                                 preview,
                             )
 
-                if handoff_triggered:
-                    await websocket.send_text(json.dumps({
-                        "type": "handoff",
-                        "reason": "purchase_intent",
-                    }))
+                        if handoff_triggered:
+                            await websocket.send_text(json.dumps({
+                                "type": "handoff",
+                                "reason": "purchase_intent",
+                            }))
 
-                await websocket.send_text(json.dumps({
-                    "type": "done",
-                    "conversation_id": conv.id,
-                    "confidence": confidence,
-                    "lead_prompt": lead_prompt or handoff_triggered,
-                    "handoff_active": conv.handoff_status in ("pending", "active"),
-                }))
+                        await websocket.send_text(json.dumps({
+                            "type": "done",
+                            "conversation_id": conv.id,
+                            "confidence": confidence,
+                            "lead_prompt": lead_prompt or handoff_triggered,
+                            "handoff_active": conv.handoff_status in ("pending", "active"),
+                        }))
+
+                except HTTPException as e:
+                    if e.status_code == 429:
+                        # 锁获取失败，提示用户稍后重试
+                        await websocket.send_text(json.dumps({
+                            "type": "error",
+                            "content": "消息处理中，请稍后再试",
+                        }))
+                        await websocket.send_text(json.dumps({
+                            "type": "done",
+                            "conversation_id": conv.id,
+                            "confidence": 0.0,
+                            "lead_prompt": False,
+                        }))
+                        continue
+                    raise
 
     except WebSocketDisconnect:
         logger.info("WebSocket disconnected: %s", conversation_id)

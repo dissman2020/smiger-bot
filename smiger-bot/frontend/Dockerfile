@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM docker.1ms.run/library/node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ COPY . .
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
 RUN npm run build
 
-FROM node:20-alpine AS runner
+FROM docker.1ms.run/library/node:20-alpine AS runner
 
 WORKDIR /app
 ENV NODE_ENV=production

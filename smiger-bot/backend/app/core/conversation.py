@@ -37,16 +37,45 @@ class ConversationManager:
     """Manages multi-turn conversations with RAG-augmented responses and lead capture."""
 
     async def _get_history(self, conversation_id: str) -> list[dict]:
+        """使用 Redis List 原子操作获取历史记录，避免竞态条件"""
         r = await _get_redis()
-        raw = await r.get(f"conv:{conversation_id}:history")
-        if raw:
-            return json.loads(raw)
+        # 使用 LRANGE 获取列表中的所有元素（原子操作）
+        key = f"conv:{conversation_id}:history"
+        raw_list = await r.lrange(key, 0, -1)
+        if raw_list:
+            history = [json.loads(item) for item in raw_list]
+            # 只保留最近的 MAX_HISTORY_TURNS * 2 条消息
+            max_items = settings.MAX_HISTORY_TURNS * 2
+            if len(history) > max_items:
+                # 异步修剪列表（不阻塞主流程）
+                asyncio.create_task(r.ltrim(key, -max_items, -1))
+            return history
         return []
 
     async def _save_history(self, conversation_id: str, history: list[dict]) -> None:
+        """将新消息追加到 Redis List（原子操作）"""
         r = await _get_redis()
-        trimmed = history[-(settings.MAX_HISTORY_TURNS * 2) :]
-        await r.set(f"conv:{conversation_id}:history", json.dumps(trimmed), ex=86400)
+        key = f"conv:{conversation_id}:history"
+        # 使用 RPUSH 原子追加新消息
+        for msg in history:
+            await r.rpush(key, json.dumps(msg))
+        # 设置过期时间并限制长度
+        max_items = settings.MAX_HISTORY_TURNS * 2
+        await r.ltrim(key, -max_items, -1)
+        await r.expire(key, 86400)
+
+    async def _append_messages(self, conversation_id: str, messages: list[dict]) -> None:
+        """原子追加消息到历史记录（线程安全）"""
+        r = await _get_redis()
+        key = f"conv:{conversation_id}:history"
+        pipe = r.pipeline()
+        for msg in messages:
+            pipe.rpush(key, json.dumps(msg))
+        # 限制长度并设置过期时间
+        max_items = settings.MAX_HISTORY_TURNS * 2
+        pipe.ltrim(key, -max_items, -1)
+        pipe.expire(key, 86400)
+        await pipe.execute()
 
     def _build_context(self, rag_results: list[dict]) -> str:
         if not rag_results:
@@ -141,12 +170,16 @@ class ConversationManager:
         assistant_msg = Message(conversation_id=conversation.id, role="assistant", content=reply, confidence=confidence)
         db.add(user_msg)
         db.add(assistant_msg)
+        # 使用原子操作增加 turn_count
+        conversation.version += 1
         conversation.turn_count += 1
         await db.commit()
 
-        history.append({"role": "user", "content": user_message})
-        history.append({"role": "assistant", "content": reply})
-        await self._save_history(conversation.id, history)
+        # 原子追加新消息到 Redis（避免竞态）
+        await self._append_messages(conversation.id, [
+            {"role": "user", "content": user_message},
+            {"role": "assistant", "content": reply}
+        ])
 
         lead_prompt = conversation.turn_count >= settings.LEAD_TRIGGER_TURN and not conversation.lead_captured
         return reply, confidence, lead_prompt
@@ -199,12 +232,16 @@ class ConversationManager:
         assistant_msg = Message(conversation_id=conversation.id, role="assistant", content=reply, confidence=confidence)
         db.add(user_msg)
         db.add(assistant_msg)
+        # 使用原子操作增加 turn_count
+        conversation.version += 1
         conversation.turn_count += 1
         await db.commit()
 
-        history.append({"role": "user", "content": user_message})
-        history.append({"role": "assistant", "content": reply})
-        await self._save_history(conversation.id, history)
+        # 原子追加新消息到 Redis（避免竞态）
+        await self._append_messages(conversation.id, [
+            {"role": "user", "content": user_message},
+            {"role": "assistant", "content": reply}
+        ])
 
         lead_prompt = conversation.turn_count >= settings.LEAD_TRIGGER_TURN and not conversation.lead_captured
         yield "", {"confidence": confidence, "lead_prompt": lead_prompt}

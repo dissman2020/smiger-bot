@@ -47,6 +47,7 @@ class Conversation(Base):
     customer_phone: Mapped[str | None] = mapped_column(String(32), nullable=True, index=True)
     language: Mapped[str] = mapped_column(String, default="en")
     turn_count: Mapped[int] = mapped_column(Integer, default=0)
+    version: Mapped[int] = mapped_column(Integer, default=0)  # 乐观锁版本号
     lead_captured: Mapped[bool] = mapped_column(Boolean, default=False)
     handoff_status: Mapped[str] = mapped_column(String, default="none")
     handoff_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
@@ -203,6 +204,7 @@ async def init_db():
             "ALTER TABLE conversations ADD COLUMN IF NOT EXISTS customer_phone VARCHAR(32)",
             "ALTER TABLE conversations ADD COLUMN IF NOT EXISTS telegram_account_name VARCHAR(64)",
             "ALTER TABLE conversations ADD COLUMN IF NOT EXISTS handoff_notice_sent BOOLEAN DEFAULT FALSE",
+            "ALTER TABLE conversations ADD COLUMN IF NOT EXISTS version INTEGER DEFAULT 0",
             "CREATE INDEX IF NOT EXISTS idx_conversations_customer_region ON conversations (customer_region)",
             "CREATE INDEX IF NOT EXISTS idx_conversations_customer_phone ON conversations (customer_phone)",
         ]:

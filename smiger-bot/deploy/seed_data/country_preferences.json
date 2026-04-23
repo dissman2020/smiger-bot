@@ -1,0 +1,42 @@
+[
+  {
+    "country": "Nigeria",
+    "country_cn": "尼日利亚",
+    "hot_models": ["LG-09", "LG-07", "SM-412/3", "M-4160"],
+    "sizes": ["40\"", "41\""],
+    "features": "装EQ, 配连接线, 配包",
+    "features_en": "With EQ, cable, and bag"
+  },
+  {
+    "country": "USA",
+    "country_cn": "美国",
+    "hot_models": ["M-215-40", "MAS-41A", "MES-41A", "MDS-41A", "M-F1SS", "SM-361/401"],
+    "sizes": ["40\"", "41\""],
+    "features": "高档, 装EQ, 每个内标不同序列号, 配包(高档加厚), 红松面单, 指板不要镶嵌",
+    "features_en": "High-end, with EQ, custom serial number on each label, premium thick bag, red cedar solid top, no fingerboard inlay"
+  },
+  {
+    "country": "Canada",
+    "country_cn": "加拿大",
+    "hot_models": ["SM-401-A/C", "LG-07-09"],
+    "sizes": ["40\"", "41\""],
+    "features": "",
+    "features_en": ""
+  },
+  {
+    "country": "Myanmar",
+    "country_cn": "缅甸",
+    "hot_models": ["EN/FN-10/20/25/30", "LG-09-EQ"],
+    "sizes": ["40\""],
+    "features": "擦色",
+    "features_en": "Stained finish"
+  },
+  {
+    "country": "Cambodia",
+    "country_cn": "柬埔寨",
+    "hot_models": ["M-210-41", "M-410-41"],
+    "sizes": ["41\""],
+    "features": "",
+    "features_en": ""
+  }
+]

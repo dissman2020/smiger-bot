@@ -1,0 +1,48 @@
+[
+  {
+    "scenario_name": "\u591a\u7528\u6237\u5e76\u53d1\uff08\u573a\u666f1\uff09",
+    "total_requests": 10,
+    "success_count": 10,
+    "failure_count": 0,
+    "avg_response_time": 0.15103483200073242,
+    "max_response_time": 0.15103483200073242,
+    "min_response_time": 0.15103483200073242,
+    "errors": [],
+    "timestamp": "2026-04-22 16:32:42"
+  },
+  {
+    "scenario_name": "\u540c\u4e00\u7528\u6237\u5feb\u901f\u53d1\u9001\uff08\u573a\u666f2\uff09",
+    "total_requests": 5,
+    "success_count": 5,
+    "failure_count": 0,
+    "avg_response_time": 0.17156496047973632,
+    "max_response_time": 0.1715679168701172,
+    "min_response_time": 0.17156267166137695,
+    "errors": [
+      "\u7ade\u6001\u6761\u4ef6\u786e\u8ba4\uff01\u671f\u671bturn_count=5, \u5b9e\u9645=1"
+    ],
+    "timestamp": "2026-04-22 16:32:42"
+  },
+  {
+    "scenario_name": "\u6df7\u5408\u8d1f\u8f7d\uff08\u573a\u666f3\uff09",
+    "total_requests": 50,
+    "success_count": 10,
+    "failure_count": 0,
+    "avg_response_time": 0.030627846717834473,
+    "max_response_time": 0.3062784671783447,
+    "min_response_time": 0.3062784671783447,
+    "errors": [],
+    "timestamp": "2026-04-22 16:32:42"
+  },
+  {
+    "scenario_name": "\u8fde\u63a5\u6c60\u538b\u529b\uff08\u573a\u666f4\uff09",
+    "total_requests": 20,
+    "success_count": 20,
+    "failure_count": 0,
+    "avg_response_time": 0.0201438307762146,
+    "max_response_time": 0.402876615524292,
+    "min_response_time": 0.1,
+    "errors": [],
+    "timestamp": "2026-04-22 16:32:42"
+  }
+]

@@ -1,0 +1,1 @@
+# Smiger Bot Test Suite
