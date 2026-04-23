@@ -1,0 +1,15 @@
+deploy/smiger-bot-images.tar
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+
+# PIDs
+*.pid
+
+# Pytest
+.pytest_cache/
