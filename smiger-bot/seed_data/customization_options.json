@@ -1,0 +1,122 @@
+[
+  {
+    "option_id": "left_handed",
+    "label_cn": "左手吉他",
+    "label_en": "Left handed guitar",
+    "surcharge_rmb": 3,
+    "surcharge_usd": 0.5,
+    "note": ""
+  },
+  {
+    "option_id": "acrylic_block_dots",
+    "label_cn": "亚克力块状音点",
+    "label_en": "Acrylic block position dots",
+    "surcharge_rmb": 15,
+    "surcharge_usd": null,
+    "note": ""
+  },
+  {
+    "option_id": "celluloid_binding_upgrade",
+    "label_cn": "赛露露包边(ABS升级)",
+    "label_en": "Celluloid binding upgrade (from ABS)",
+    "surcharge_rmb": 10,
+    "surcharge_usd": null,
+    "note": "ABS和赛露露包边差价"
+  },
+  {
+    "option_id": "pearl_logo",
+    "label_cn": "白贝LOGO",
+    "label_en": "Pearl shell logo",
+    "surcharge_rmb": 12,
+    "surcharge_usd": null,
+    "note": ""
+  },
+  {
+    "option_id": "maple_inlay_logo",
+    "label_cn": "枫木LOGO镶嵌",
+    "label_en": "Maple inlay logo",
+    "surcharge_rmb": 5,
+    "surcharge_usd": null,
+    "note": ""
+  },
+  {
+    "option_id": "mail_order_packaging",
+    "label_cn": "邮购包装",
+    "label_en": "Mail-order packaging",
+    "surcharge_rmb": 15,
+    "surcharge_usd": null,
+    "note": "每把"
+  },
+  {
+    "option_id": "custom_serial_number",
+    "label_cn": "内标不同序号",
+    "label_en": "Custom serial number on label",
+    "surcharge_rmb": null,
+    "surcharge_usd": 0.5,
+    "note": ""
+  },
+  {
+    "option_id": "eq_installation",
+    "label_cn": "EQ安装费",
+    "label_en": "EQ/Pickup installation fee",
+    "surcharge_rmb": 10,
+    "surcharge_usd": 1.67,
+    "note": "EQ本身费用另计，请从EQ价目表选择"
+  },
+  {
+    "option_id": "rosewood_to_engineered",
+    "label_cn": "玫瑰木指板换成科技木",
+    "label_en": "Rosewood to engineered wood fingerboard",
+    "surcharge_rmb": 0,
+    "surcharge_usd": 0,
+    "note": "不加钱 / No extra charge"
+  },
+  {
+    "option_id": "color_box_34",
+    "label_cn": "彩盒 34寸",
+    "label_en": "Color box 34\"",
+    "surcharge_rmb": null,
+    "surcharge_usd": 0.57,
+    "note": "彩盒MOQ 1000个"
+  },
+  {
+    "option_id": "color_box_36",
+    "label_cn": "彩盒 36寸",
+    "label_en": "Color box 36\"",
+    "surcharge_rmb": null,
+    "surcharge_usd": 0.73,
+    "note": "彩盒MOQ 1000个"
+  },
+  {
+    "option_id": "color_box_38",
+    "label_cn": "彩盒 38寸",
+    "label_en": "Color box 38\"",
+    "surcharge_rmb": null,
+    "surcharge_usd": 0.75,
+    "note": "彩盒MOQ 1000个"
+  },
+  {
+    "option_id": "color_box_39",
+    "label_cn": "彩盒 39寸",
+    "label_en": "Color box 39\"",
+    "surcharge_rmb": null,
+    "surcharge_usd": 0.80,
+    "note": "彩盒MOQ 1000个"
+  },
+  {
+    "option_id": "color_box_40",
+    "label_cn": "彩盒 40寸",
+    "label_en": "Color box 40\"",
+    "surcharge_rmb": null,
+    "surcharge_usd": 0.87,
+    "note": "彩盒MOQ 1000个"
+  },
+  {
+    "option_id": "color_box_41",
+    "label_cn": "彩盒 41寸",
+    "label_en": "Color box 41\"",
+    "surcharge_rmb": null,
+    "surcharge_usd": 1.00,
+    "note": "彩盒MOQ 1000个"
+  }
+]

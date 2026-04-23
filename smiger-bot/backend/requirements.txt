@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+python-multipart
+sqlalchemy[asyncio]
+asyncpg
+pydantic-settings
+redis
+openai
+httpx
+chromadb
+pypdf
+python-docx
+openpyxl
+python-jose[cryptography]
+passlib[bcrypt]
+aiofiles
+olefile

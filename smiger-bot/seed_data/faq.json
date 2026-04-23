@@ -1,0 +1,200 @@
+[
+  {
+    "category": "pricing",
+    "question_cn": "价格多少？",
+    "question_en": "What is the price range?",
+    "answer_cn": "我们中档民谣吉他价格范围在43USD - 62USD；高档民谣吉他价格范围在43USD - 215USD。尺寸有36\"/40\"/41\"，多种木材、颜色和桶型供选择。可提供EQ安装服务，不同价位EQ供选择。",
+    "answer_en": "Our mid-range acoustic guitar price range from 43USD to 62USD; high-end acoustic guitar price range from 43USD to 215USD. Different size includes 36\"/40\"/41\". Various wood material/colors/body shapes for your options. Equalizer installation available. Different price range EQ for your options.",
+    "tags": ["pricing", "acoustic"],
+    "extra_metadata": {"prices_usd": [43, 62, 215]}
+  },
+  {
+    "category": "pricing",
+    "question_cn": "入门级吉他价格多少？",
+    "question_en": "What is the beginner guitar price?",
+    "answer_cn": "入门民谣吉他系列价格范围在16USD - 35USD。尺寸有36\"/40\"/41\"，多种木材、颜色和桶型供选择，可提供配件套装定制服务。",
+    "answer_en": "Our beginner guitar series price range from 16USD to 35USD. Different size includes 36\"/40\"/41\". Various wood material/colors/body shapes for your options. Custom guitar pack with accessories service available.",
+    "tags": ["pricing", "beginner"],
+    "extra_metadata": {"prices_usd": [16, 35]}
+  },
+  {
+    "category": "moq",
+    "question_cn": "起订量多少？",
+    "question_en": "What's the MOQ?",
+    "answer_cn": "现货6把起订，可以混色混款。贴牌120把起订，可以混款，每个型号起订量60把，每个颜色起订量30把。注：OEM报价表首页的底价民谣MOQ是整柜，不可以混其他页面的常规款式。",
+    "answer_en": "Our brand stock MOQ 6PCS, mixed models/colors available. Custom brand MOQ 120pcs, mixed models available. Each model MOQ 60PCS. Each color MOQ 30PCS.",
+    "tags": ["MOQ", "OEM"],
+    "extra_metadata": {"moq_values": [6, 120, 60, 30]}
+  },
+  {
+    "category": "delivery",
+    "question_cn": "交期多久？",
+    "question_en": "What is the delivery time?",
+    "answer_cn": "现货单3-10个工作日内完成。OEM订单交期是支付定金和提供确认设计稿后的45-60天。",
+    "answer_en": "For available stock order, we will send out your order within 3-10 workdays depends on the exact order list. For OEM order, lead time is 45 to 60 days after receiving your deposit and confirmed design files.",
+    "tags": ["delivery", "lead-time"],
+    "extra_metadata": {"lead_days": [{"min": 3, "max": 10}, {"min": 45, "max": 60}]}
+  },
+  {
+    "category": "logistics",
+    "question_cn": "一个集装箱能装多少把吉他？",
+    "question_en": "How many guitars can be fit to a full container?",
+    "answer_cn": "常规包装数据：36寸每箱6把/0.24CBM，20GP装702把，40GP装1428把，40HQ装1698把；40寸每箱6把/0.25CBM，20GP装672把，40GP装1368把，40HQ装1632把；41寸每箱6把/0.35CBM，20GP装480把，40GP装1140把，40HQ装1362把。",
+    "answer_en": "Regular packaging data: 36\" 6pcs/ctn 0.24CBM, 20GP 702pcs, 40GP 1428pcs, 40HQ 1698pcs; 40\" 6pcs/ctn 0.25CBM, 20GP 672pcs, 40GP 1368pcs, 40HQ 1632pcs; 41\" 6pcs/ctn 0.35CBM, 20GP 480pcs, 40GP 1140pcs, 40HQ 1362pcs.",
+    "tags": ["packaging", "container", "logistics"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "customization",
+    "question_cn": "可以定制LOGO吗？",
+    "question_en": "Can I have my logo on guitar?",
+    "answer_cn": "可以，最低起订量是120把，可以混款，每个型号起订量60把。LOGO位置：琴头LOGO、定制内标、内盒和外箱印LOGO。琴头LOGO默认是单色水标，内标默认是原木色打印的纸张。",
+    "answer_en": "Yes, custom logo service available. MOQ 120pcs, mixed models available. Each model MOQ 60PCS. Each color MOQ 30PCS. Logo on guitar head (single color decal by default). Custom sound hole label. Logo on box and carton. Please send the design to confirm any extra cost.",
+    "tags": ["LOGO", "OEM", "customization"],
+    "extra_metadata": {"moq_values": [120, 60, 30]}
+  },
+  {
+    "category": "customization",
+    "question_cn": "内标上可以做不同序号吗？",
+    "question_en": "Can we custom different Serial Number inside tone hole?",
+    "answer_cn": "可以，每把加USD0.5。",
+    "answer_en": "Yes. Will add USD0.5/pc if custom different serial number on the tag.",
+    "tags": ["label", "serial-number", "customization"],
+    "extra_metadata": {"prices_usd": [0.5]}
+  },
+  {
+    "category": "customization",
+    "question_cn": "可以安装拾音器/EQ吗？",
+    "question_en": "Can I have guitars with pickup/EQ?",
+    "answer_cn": "我们能提供安装EQ的服务。请从EQ价目表里选择你需要的EQ，EQ安装费10元/把。",
+    "answer_en": "We can install pickups/EQ to guitar, please choose pickups from price list. Install fee 1.67USD (10RMB) for each pickup.",
+    "tags": ["EQ", "pickup", "customization"],
+    "extra_metadata": {"prices_usd": [1.67], "prices_rmb": [10]}
+  },
+  {
+    "category": "customization",
+    "question_cn": "可以定制套装吗？",
+    "question_en": "Can I order as a guitar bundle?",
+    "answer_cn": "我们可提供套装定制服务，配件可包括调音器、背带、备用琴弦、拨片、背包或皮盒、变调夹等，请从价目表里选择你要的款式，我们会根据要求打包。",
+    "answer_en": "We provide custom bundle service, please choose accessories from accessory price list. Normally a bundle includes tuner, strap, bag or hard case (for high grade guitars), spare string set, capo, picks, etc. We will pack as your requirements.",
+    "tags": ["bundle", "accessories", "customization"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "customization",
+    "question_cn": "更换配置的费用是多少？",
+    "question_en": "What are the customization surcharges?",
+    "answer_cn": "左手吉他+3元($0.5)；亚克力块状音点+15元；ABS和赛露露包边差价10元；白贝LOGO+12元；枫木LOGO镶嵌+5元；邮购包装+15元/把。玫瑰木指板换成科技木不加钱。",
+    "answer_en": "Left handed +USD0.5/PCS; Acrylic block position dots +15RMB; ABS to Celluloid binding +10RMB; Pearl logo +12RMB; Maple inlay logo +5RMB; Mail-order packaging +15RMB/pc. Rosewood to engineered wood fingerboard: no extra charge.",
+    "tags": ["pricing", "customization", "surcharge"],
+    "extra_metadata": {"prices_usd": [0.5], "prices_rmb": [3, 15, 10, 12, 5, 15]}
+  },
+  {
+    "category": "logistics",
+    "question_cn": "彩盒包装怎么收费？",
+    "question_en": "What is the color box pricing?",
+    "answer_cn": "彩盒MOQ是1000个。不同尺寸每把增加费用：34寸$0.57, 36寸$0.73, 38寸$0.75, 39寸$0.80, 40寸$0.87, 41寸$1.00。",
+    "answer_en": "Color box MOQ is 1,000PCS. Extra cost per guitar by size: 34\" $0.57, 36\" $0.73, 38\" $0.75, 39\" $0.80, 40\" $0.87, 41\" $1.00.",
+    "tags": ["color-box", "packaging", "pricing"],
+    "extra_metadata": {"moq_values": [1000]}
+  },
+  {
+    "category": "country_preferences",
+    "question_cn": "各国有什么偏好？",
+    "question_en": "What are the popular models by country?",
+    "answer_cn": "尼日利亚热销：LG-09, LG-07, SM-412/3, M-4160，40/41寸，装EQ，配连接线和包。美国热销：M-215-40, MAS-41A, MES-41A, MDS-41A, M-F1SS, SM-361/401，高档，装EQ，每个内标不同序列号，配高档加厚包，红松面单。加拿大热销：SM-401-A/C, LG-07-09。缅甸热销：EN/FN-10/20/25/30, LG-09-EQ，40寸，擦色。柬埔寨热销：M-210-41, M-410-41。",
+    "answer_en": "Nigeria popular: LG-09, LG-07, SM-412/3, M-4160, 40/41\", with EQ, cable and bag. USA popular: M-215-40, MAS-41A, MES-41A, MDS-41A, M-F1SS, SM-361/401, high-end, with EQ, custom serial number, premium thick bag, red cedar top. Canada popular: SM-401-A/C, LG-07-09. Myanmar popular: EN/FN-10/20/25/30, LG-09-EQ, 40\", stained finish. Cambodia popular: M-210-41, M-410-41.",
+    "tags": ["country", "market", "recommendation"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "moq",
+    "question_cn": "Smiger生产哪些类型的吉他？",
+    "question_en": "What types of guitars does Smiger manufacture?",
+    "answer_cn": "Smiger生产全系列弦乐器，包括：D型和GA型民谣吉他、缺角民谣吉他、S型和LP型电吉他、J型贝斯吉他、高音和中音尤克里里，以及配件。我们还提供全面的OEM/ODM定制吉他制造服务。",
+    "answer_en": "Smiger manufactures a full range of stringed instruments including: dreadnought and grand auditorium acoustic guitars, cutaway acoustics, S-style and LP-style electric guitars, J-style bass guitars, soprano and concert ukuleles, and accessories. We also offer full OEM/ODM services for custom guitar manufacturing.",
+    "tags": ["products", "overview"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "customization",
+    "question_cn": "Smiger提供OEM/ODM服务吗？",
+    "question_en": "Does Smiger offer OEM/ODM services?",
+    "answer_cn": "是的，Smiger提供全面的OEM/ODM服务。我们可以定制琴体形状、木材选择、饰面（高光、哑光、缎面、开放漆）、拾音器配置、LOGO印刷、琴头设计、自定义镶嵌和包装。OEM起订量50把，ODM起订量200把。OEM交期45-60天，ODM交期60-90天。",
+    "answer_en": "Yes, Smiger offers comprehensive OEM/ODM services. We can customize body shapes, wood selections, finishes (gloss, matte, satin, open pore), pickup configurations, logo printing, headstock designs, custom inlays, and packaging. MOQ is 50 units for OEM and 200 units for full ODM. Lead time is 45-60 days for OEM and 60-90 days for ODM projects.",
+    "tags": ["OEM", "ODM", "customization"],
+    "extra_metadata": {"moq_values": [50, 200], "lead_days": [{"min": 45, "max": 60}, {"min": 60, "max": 90}]}
+  },
+  {
+    "category": "general",
+    "question_cn": "Smiger使用什么木材做吉他面板？",
+    "question_en": "What wood types does Smiger use for guitar tops?",
+    "answer_cn": "民谣吉他面板：入门级使用云杉合板，中高档使用实木锡特卡云杉。背侧板提供沙比利、桃花心木和玫瑰木。电吉他采用椴木和桃花心木琴体。所有木材都经过适当干燥和处理，以获得最佳音色和稳定性。",
+    "answer_en": "For acoustic guitar tops, we use spruce (laminated) for entry-level models, solid Sitka spruce for mid-range and premium models. For back and sides, we offer sapele, mahogany, and rosewood. Our electric guitars feature basswood and mahogany bodies. All wood is properly dried and treated for optimal tone and stability.",
+    "tags": ["wood", "material", "tonewood"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "general",
+    "question_cn": "Smiger接受什么付款方式？",
+    "question_en": "What payment terms does Smiger accept?",
+    "answer_cn": "我们接受T/T电汇，30%定金，70%余款在发货前支付。对于长期合作伙伴，也可以安排L/C信用证。样品订单可使用PayPal付款。对于大批量合作，我们愿意讨论灵活的付款安排。",
+    "answer_en": "We accept T/T (Telegraphic Transfer) with 30% deposit and 70% balance before shipment. For established partners, we also offer L/C (Letter of Credit) terms. PayPal is available for sample orders. We're open to discussing flexible payment arrangements for large volume partnerships.",
+    "tags": ["payment", "terms"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "general",
+    "question_cn": "可以在大批量订购前先拿样品吗？",
+    "question_en": "Can I get samples before placing a bulk order?",
+    "answer_cn": "当然可以！我们鼓励在批量采购前先下样品单。样品价格通常是批量FOB价的2-3倍，用于覆盖单独处理成本。样品订单在7-10个工作日内发出。样品费可在首批100+把订单中抵扣。",
+    "answer_en": "Absolutely! We encourage sample orders before bulk purchases. Sample pricing is typically 2-3x the bulk FOB price to cover individual handling costs. Sample orders ship within 7-10 business days. Sample fees are deductible from your first bulk order of 100+ units.",
+    "tags": ["sample", "trial"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "general",
+    "question_cn": "Smiger有哪些质量控制流程？",
+    "question_en": "What quality control processes does Smiger have?",
+    "answer_cn": "我们的质检流程包括：原材料检验、关键装配阶段的在线质量检查、成品检验（可弹性、饰面、电子元件）和出货前检验。我们持有CE、FCC和ROHS认证。可应买方要求安排第三方检验（SGS、Bureau Veritas）。",
+    "answer_en": "Our QC process includes: raw material inspection, in-process quality checks at key assembly stages, final product inspection (playability, finish, electronics), and pre-shipment inspection. We hold CE, FCC, and ROHS certifications. Third-party inspection (SGS, Bureau Veritas) can be arranged at buyer's request.",
+    "tags": ["quality", "QC", "certification"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "logistics",
+    "question_cn": "有哪些物流方式？",
+    "question_en": "What shipping options are available?",
+    "answer_cn": "我们提供海运（整柜FCL和拼柜LCL）、空运和国际快递（DHL/FedEx/UPS用于样品）。大批量订单海运最经济——一个20尺柜大约可装400-500箱吉他。我们从广州/深圳港口FOB发货。可安排CIF和DDP条款。",
+    "answer_en": "We ship via sea freight (FCL and LCL), air freight, and express courier (DHL/FedEx/UPS for samples). Sea freight is most economical for bulk orders — a 20ft container holds approximately 400-500 guitar cartons. We ship FOB Guangzhou/Shenzhen port. CIF and DDP terms can be arranged upon request.",
+    "tags": ["shipping", "logistics", "freight"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "general",
+    "question_cn": "产品有保修吗？",
+    "question_en": "Does Smiger provide warranty on products?",
+    "answer_cn": "是的，我们对所有产品提供1年的制造缺陷保修。涵盖正常使用下的结构问题、饰面缺陷和电子元件故障。保修索赔可提供替换零件或未来订单的信用额度。经销合作伙伴可享受延长保修计划。",
+    "answer_en": "Yes, we provide a 1-year warranty against manufacturing defects on all products. This covers structural issues, finish defects, and electronics failures under normal use. For any warranty claims, we offer replacement parts or credit toward future orders. Extended warranty programs are available for distribution partners.",
+    "tags": ["warranty", "after-sales"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "general",
+    "question_cn": "Smiger出口到哪些市场？",
+    "question_en": "What markets does Smiger export to?",
+    "answer_cn": "Smiger出口到北美、欧洲、东南亚、南美和非洲等50多个国家。我们的主要市场包括美国、德国、英国、巴西、印尼、印度和南非。我们有满足不同市场包装、标签和合规标准要求的丰富经验。",
+    "answer_en": "Smiger exports to over 50 countries across North America, Europe, Southeast Asia, South America, and Africa. Our top markets include the USA, Germany, UK, Brazil, Indonesia, India, and South Africa. We have experience meeting different market requirements for packaging, labeling, and compliance standards.",
+    "tags": ["export", "market"],
+    "extra_metadata": {}
+  },
+  {
+    "category": "customization",
+    "question_cn": "可以做定制饰面吗？",
+    "question_en": "Can Smiger do custom finishes?",
+    "answer_cn": "可以！我们提供多种饰面选项：高光聚氨酯、哑光/缎面、开放漆自然色、擦色饰面和金属色。可根据潘通色号进行自定义配色。特殊艺术/图形饰面请提供设计文件，我们会相应报价。定制饰面订单通常100把起订。",
+    "answer_en": "Yes! We offer a wide range of finish options: high gloss polyurethane, matte/satin, open pore natural, stained finishes, and metallic colors. Custom color matching is available with a pantone reference. For special art/graphic finishes, please provide a design file and we'll quote accordingly. Custom finish orders typically start at 100 units.",
+    "tags": ["finish", "color", "customization"],
+    "extra_metadata": {"moq_values": [100]}
+  }
+]

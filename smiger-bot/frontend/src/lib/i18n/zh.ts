@@ -1,0 +1,221 @@
+import type { Locale } from "./en";
+
+const zh: Locale = {
+  landing: {
+    title: "Smiger 吉他专家",
+    subtitle:
+      "您的 7×24 小时 AI 智能售前顾问。随时咨询产品信息、获取个性化推荐和报价 —— 一切实时响应。",
+    feature1Title: "专业产品知识",
+    feature1Desc:
+      "深度了解 Smiger 全系列吉他 —— 民谣吉他、电吉他、贝斯、尤克里里及配件。",
+    feature2Title: "快速报价",
+    feature2Desc:
+      "分享您的需求，我们的团队将在 24 小时内为您提供详细产品目录和报价。",
+    feature3Title: "全天候在线",
+    feature3Desc:
+      "没有时区障碍，随时随地获取专业支持。",
+    chatHint: "点击右下角的聊天图标开始对话 →",
+  },
+
+  chat: {
+    headerTitle: "Smiger 吉他专家",
+    headerStatus: "在线 — 即时回复",
+    humanMode: "人工客服已接入",
+    greeting:
+      "您好！👋 欢迎来到 Smiger 吉他。我是您的 AI 产品顾问。\n\n无论您在寻找民谣吉他、电吉他、贝斯还是尤克里里 —— 我都能帮您找到最适合的产品。\n\n请问您今天想了解什么？",
+    inputPlaceholder: "输入您的消息...",
+    submitError: "提交失败，请重试。",
+    leadThanks:
+      "感谢您留下联系方式！🎸 我们的团队会审核您的需求，并在 24 小时内发送个性化产品目录和报价。在此期间，您可以继续向我提问！",
+    handoffNotice:
+      "感谢您的购买意向！我们的销售专员将尽快为您服务。请先填写联系方式，以便我们更好地为您跟进。",
+    salesConnected: "销售专员已接入对话，将为您提供专业服务。",
+    handoffResolved: "人工服务已结束，AI 助手继续为您服务。",
+  },
+
+  lead: {
+    title: "获取您的专属报价",
+    subtitle:
+      "留下您的联系方式，我们的团队将在 24 小时内为您发送详细产品目录和报价。",
+    name: "您的姓名",
+    company: "公司名称",
+    email: "邮箱 *",
+    phone: "电话",
+    country: "国家/地区",
+    requirement: "请描述您的需求（产品类型、数量等）",
+    submit: "获取报价",
+    submitting: "提交中...",
+  },
+
+  admin: {
+    brand: "Smiger AI-OS",
+    signOut: "退出登录",
+    dashboard: "仪表盘",
+    handoff: "人工接管",
+    knowledgeBase: "知识库",
+    conversations: "对话记录",
+    leads: "客户线索",
+    faq: "FAQ 管理",
+    csData: "客服数据",
+    settings: "API 设置",
+  },
+
+  login: {
+    title: "Smiger AI-OS 管理后台",
+    subtitle: "登录以管理您的 AI 助手",
+    username: "用户名",
+    password: "密码",
+    signIn: "登 录",
+    signingIn: "登录中...",
+    error: "用户名或密码错误",
+  },
+
+  dashboardPage: {
+    title: "仪表盘",
+    loading: "加载中...",
+    conversations: "对话数",
+    messages: "消息数",
+    leadsCaptured: "已获取线索",
+    knowledgeDocs: "知识库文档",
+    today: "今日",
+  },
+
+  knowledgePage: {
+    title: "知识库",
+    upload: "上传文档",
+    uploading: "上传中...",
+    description:
+      "上传产品文档、常见问题、培训资料和销售话术，为 AI 助手提供知识支持。",
+    thFile: "文件名",
+    thType: "类型",
+    thSize: "大小",
+    thChunks: "分块数",
+    thStatus: "状态",
+    thUploaded: "上传时间",
+    thAction: "操作",
+    empty: "暂无已上传的文档。",
+    deleteConfirm: (name: string) =>
+      `确定删除「${name}」吗？这将移除其所有知识分块。`,
+    statusReady: "就绪",
+    statusError: "错误",
+    statusProcessing: "处理中",
+  },
+
+  conversationsPage: {
+    title: "对话记录",
+    empty: "暂无对话记录。",
+    noMessages: "该对话暂无消息。",
+    selectHint: "选择一个对话查看详情",
+    loading: "加载消息中...",
+    turns: "轮",
+  },
+
+  leadsPage: {
+    title: "客户线索",
+    export: "导出 CSV",
+    thName: "姓名",
+    thCompany: "公司",
+    thEmail: "邮箱",
+    thPhone: "电话",
+    thCountry: "国家/地区",
+    thRequirement: "需求",
+    thDate: "日期",
+    empty: "暂无已获取的客户线索。",
+  },
+
+  settingsPage: {
+    title: "API 设置",
+    llmSection: "LLM（聊天补全）",
+    embeddingSection: "向量嵌入服务",
+    apiKey: "API 密钥",
+    baseUrl: "接口地址",
+    model: "模型名称",
+    embeddingUrl: "嵌入接口地址",
+    easyllmId: "EasyLLM ID",
+    dimensions: "向量维度",
+    save: "保存设置",
+    saving: "保存中...",
+    test: "测试连接",
+    testing: "测试中...",
+    saved: "设置已保存",
+    connected: "连接成功",
+    failed: "连接失败",
+    whatsappSection: "WhatsApp 通道",
+    whatsappAdminPhone: "管理员 WhatsApp 号码",
+    whatsappTemplate: "模板名称（可选）",
+    whatsappWebhookHint: "请在 Meta Developer Portal 中将此地址配置为 Webhook 回调地址",
+  },
+
+  csPage: {
+    title: "客服数据",
+    import: "导入 JSON",
+    importing: "导入中...",
+    addRecord: "新增记录",
+    stats: "统计",
+    total: "总记录数",
+    open: "待处理",
+    resolved: "已解决",
+    channels: "渠道",
+    thCustomer: "客户",
+    thEmail: "邮箱",
+    thChannel: "渠道",
+    thSubject: "主题",
+    thAgent: "客服",
+    thStatus: "状态",
+    thDate: "日期",
+    empty: "暂无客服记录。",
+  },
+
+  faqPage: {
+    title: "FAQ 管理",
+    addEntry: "新增 FAQ",
+    import: "导入文件",
+    importing: "导入中...",
+    syncKnowledge: "同步到知识库",
+    syncing: "同步中...",
+    syncSuccess: "已同步 {entries} 条记录（{chunks} 个分块）到知识库",
+    search: "搜索问题/回答...",
+    allCategories: "全部分类",
+    thQuestion: "问题",
+    thAnswer: "回答",
+    thCategory: "分类",
+    thTags: "标签",
+    thAction: "操作",
+    empty: "暂无 FAQ 条目。",
+    deleteConfirm: (q: string) => `确定删除「${q}」吗？`,
+    formTitle: "FAQ 条目",
+    questionCn: "问题（中文）",
+    questionEn: "问题（英文）",
+    answerCn: "回答（中文）",
+    answerEn: "回答（英文）",
+    category: "分类",
+    tags: "标签（逗号分隔）",
+    save: "保存",
+    cancel: "取消",
+    categories: {
+      general: "通用",
+      pricing: "价格",
+      moq: "起订量",
+      delivery: "交期",
+      customization: "定制",
+      logistics: "物流",
+      country_preferences: "国家偏好",
+    },
+  },
+
+  handoffPage: {
+    title: "人工接管",
+    empty: "暂无人工接管请求",
+    pending: "待接入",
+    active: "服务中",
+    selectHint: "选择一个对话开始人工服务",
+    accept: "接入对话",
+    resolve: "结束服务",
+    replyPlaceholder: "输入回复内容...(Enter 发送)",
+    pendingHint: "该客户有购买意向，请点击「接入对话」开始人工服务",
+  },
+
+  langSwitch: "EN",
+};
+
+export default zh;
