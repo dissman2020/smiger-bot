@@ -302,46 +302,29 @@ async def chat_ws(websocket: WebSocket, conversation_id: str):
                                 handoff_triggered = True
                                 logger.info("Purchase intent detected for conversation %s", conv.id)
 
-                except HTTPException as e:
-                    if e.status_code == 429:
-                        # 锁获取失败，提示用户稍后重试
-                        await websocket.send_text(json.dumps({
-                            "type": "error",
-                            "content": "消息处理中，请稍后再试",
-                        }))
-                        await websocket.send_text(json.dumps({
-                            "type": "done",
-                            "conversation_id": conv.id,
-                            "confidence": 0.0,
-                            "lead_prompt": False,
-                        }))
-                        continue
-                    raise
-
-                        preview = user_message[:200] if user_message else full_reply[:200]
-                        if whatsapp_client.is_enabled():
-                            await whatsapp_client.notify_handoff(
-                                conv.whatsapp_tag,
-                                conv.visitor_id,
-                                preview,
-                            )
-                        if telegram_client.is_enabled():
-                            await telegram_client.notify_handoff(
-                                conv.whatsapp_tag,
-                                conv.visitor_id,
-                                preview,
-                                account_name=conv.telegram_account_name,
-                                customer_phone=conv.customer_phone,
-                                customer_region=conv.customer_region,
-                            )
-                        if gchat_client.is_enabled():
-                            await gchat_client.notify_handoff(
-                                conv.whatsapp_tag,
-                                conv.visitor_id,
-                                preview,
-                            )
-
                         if handoff_triggered:
+                            preview = user_message[:200] if user_message else full_reply[:200]
+                            if whatsapp_client.is_enabled():
+                                await whatsapp_client.notify_handoff(
+                                    conv.whatsapp_tag,
+                                    conv.visitor_id,
+                                    preview,
+                                )
+                            if telegram_client.is_enabled():
+                                await telegram_client.notify_handoff(
+                                    conv.whatsapp_tag,
+                                    conv.visitor_id,
+                                    preview,
+                                    account_name=conv.telegram_account_name,
+                                    customer_phone=conv.customer_phone,
+                                    customer_region=conv.customer_region,
+                                )
+                            if gchat_client.is_enabled():
+                                await gchat_client.notify_handoff(
+                                    conv.whatsapp_tag,
+                                    conv.visitor_id,
+                                    preview,
+                                )
                             await websocket.send_text(json.dumps({
                                 "type": "handoff",
                                 "reason": "purchase_intent",
